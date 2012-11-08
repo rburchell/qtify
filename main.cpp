@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
     QApplication::setStyle("cleanlooks");
 
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon(":/qml/images/appIcon.png"));
     QQuickView view;
     view.setMinimumSize(QSize(640, 480));
     view.setWindowTitle("Qtify");

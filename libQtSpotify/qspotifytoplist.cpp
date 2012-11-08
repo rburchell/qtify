@@ -72,7 +72,7 @@ private:
     sp_toplistbrowse *m_tlbrowse;
 };
 
-static void callback_toplistbrowse_complete(sp_toplistbrowse *result, void *)
+static void SP_CALLCONV callback_toplistbrowse_complete(sp_toplistbrowse *result, void *)
 {
     QMutexLocker lock(&g_mutex);
     QSpotifyToplist *tl = g_toplistObjects.value(result);

@@ -58,7 +58,7 @@
 static QHash<sp_search *, QSpotifySearch *> g_searchObjects;
 static QMutex g_mutex;
 
-static void callback_search_complete(sp_search *result, void *)
+static void SP_CALLCONV callback_search_complete(sp_search *result, void *)
 {
     QMutexLocker lock(&g_mutex);
     QSpotifySearch *s = g_searchObjects.value(result);

@@ -100,22 +100,22 @@ private:
     int m_newposition;
 };
 
-static void callback_container_loaded(sp_playlistcontainer *pc, void *)
+static void SP_CALLCONV callback_container_loaded(sp_playlistcontainer *pc, void *)
 {
     QCoreApplication::postEvent(g_containerObjects.value(pc), new QEvent(QEvent::User));
 }
 
-static void callback_playlist_added(sp_playlistcontainer *pc, sp_playlist *playlist, int position, void *)
+static void SP_CALLCONV callback_playlist_added(sp_playlistcontainer *pc, sp_playlist *playlist, int position, void *)
 {
     QCoreApplication::postEvent(g_containerObjects.value(pc), new QSpotifyPlaylistAddedEvent(playlist, position));
 }
 
-static void callback_playlist_removed(sp_playlistcontainer *pc, sp_playlist *, int position, void *)
+static void SP_CALLCONV callback_playlist_removed(sp_playlistcontainer *pc, sp_playlist *, int position, void *)
 {
     QCoreApplication::postEvent(g_containerObjects.value(pc), new QSpotifyPlaylistRemovedEvent(position));
 }
 
-static void callback_playlist_moved(sp_playlistcontainer *pc, sp_playlist *, int position, int new_position, void *)
+static void SP_CALLCONV callback_playlist_moved(sp_playlistcontainer *pc, sp_playlist *, int position, int new_position, void *)
 {
     QCoreApplication::postEvent(g_containerObjects.value(pc), new QSpotifyPlaylistMovedEvent(position, new_position));
 }

@@ -43,6 +43,11 @@
 #ifndef QSPOTIFYSESSION_H
 #define QSPOTIFYSESSION_H
 
+#ifdef _WIN32
+typedef short int16_t;
+typedef unsigned char uint8_t;
+#endif
+
 #include <libspotify/api.h>
 
 #include <QtCore/QObject>

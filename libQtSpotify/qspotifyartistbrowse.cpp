@@ -58,7 +58,7 @@
 static QHash<sp_artistbrowse*, QSpotifyArtistBrowse*> g_artistBrowseObjects;
 static QMutex g_mutex;
 
-static void callback_artistbrowse_complete(sp_artistbrowse *result, void *)
+static void SP_CALLCONV callback_artistbrowse_complete(sp_artistbrowse *result, void *)
 {
     QMutexLocker lock(&g_mutex);
     QSpotifyArtistBrowse *o = g_artistBrowseObjects.value(result);

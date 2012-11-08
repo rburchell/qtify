@@ -358,13 +358,14 @@ void QSpotifyAudioThreadWorker::updateAudioBuffer()
         g_mutex.lock();
         int toRead = qMin(g_writePos - g_readPos, m_audioOutput->bytesFree());
         g_buffer.seek(g_readPos);
-        char data[toRead];
-        int read =  g_buffer.read(&data[0], toRead);
+        char *data = new char[toRead];
+        int read =  g_buffer.read(data, toRead);
         g_readPos += read;
         g_mutex.unlock();
 
-        m_iodevice->write(&data[0], read);
+        m_iodevice->write(data, read);
 
+		delete [] data;
     }
 
     m_timeCounter += AUDIOSTREAM_UPDATE_INTERVAL;
@@ -391,39 +392,39 @@ void QSpotifyAudioThread::run()
 }
 
 
-static void callback_logged_in(sp_session *, sp_error error)
+static void SP_CALLCONV callback_logged_in(sp_session *, sp_error error)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QSpotifyConnectionErrorEvent(error, QString::fromUtf8(sp_error_message(error))));
     if (error == SP_ERROR_OK)
         QCoreApplication::postEvent(QSpotifySession::instance(), new QEvent(QEvent::Type(QEvent::User + 14)));
 }
 
-static void callback_logged_out(sp_session *)
+static void SP_CALLCONV callback_logged_out(sp_session *)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QEvent(QEvent::Type(QEvent::User + 15)));
 }
 
-static void callback_connection_error(sp_session *, sp_error error)
+static void SP_CALLCONV callback_connection_error(sp_session *, sp_error error)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QSpotifyConnectionErrorEvent(error, QString::fromUtf8(sp_error_message(error))));
 }
 
-static void callback_notify_main_thread(sp_session *)
+static void SP_CALLCONV callback_notify_main_thread(sp_session *)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QEvent(QEvent::User));
 }
 
-static void callback_metadata_updated(sp_session *)
+static void SP_CALLCONV callback_metadata_updated(sp_session *)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QEvent(QEvent::Type(QEvent::User + 2)));
 }
 
-static void callback_userinfo_updated(sp_session* )
+static void SP_CALLCONV callback_userinfo_updated(sp_session* )
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QEvent(QEvent::Type(QEvent::User + 2)));
 }
 
-static int callback_music_delivery(sp_session *, const sp_audioformat *format, const void *frames, int num_frames)
+static int SP_CALLCONV callback_music_delivery(sp_session *, const sp_audioformat *format, const void *frames, int num_frames)
 {
     if (num_frames == 0)
         return 0;
@@ -448,22 +449,22 @@ static int callback_music_delivery(sp_session *, const sp_audioformat *format, c
     return writtenFrames;
 }
 
-static void callback_end_of_track(sp_session *)
+static void SP_CALLCONV callback_end_of_track(sp_session *)
 {
     QCoreApplication::postEvent(g_audioWorker, new QEvent(QEvent::Type(QEvent::User + 4)));
 }
 
-static void callback_play_token_lost(sp_session *)
+static void SP_CALLCONV callback_play_token_lost(sp_session *)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QEvent(QEvent::Type(QEvent::User + 13)));
 }
 
-static void callback_log_message(sp_session *, const char *data)
+static void SP_CALLCONV callback_log_message(sp_session *, const char *data)
 {
     fprintf(stderr, data);
 }
 
-static void callback_offline_error(sp_session *, sp_error error)
+static void SP_CALLCONV callback_offline_error(sp_session *, sp_error error)
 {
     if (error != SP_ERROR_OK)
         QCoreApplication::postEvent(QSpotifySession::instance(), new QSpotifyOfflineErrorEvent(error, QString::fromUtf8(sp_error_message(error))));
@@ -535,12 +536,12 @@ void QSpotifySession::init()
 
     QString cacheLoc = QCoreApplication::applicationDirPath() + QLatin1String("/cache");
     spconfig.api_version = SPOTIFY_API_VERSION;
-    spconfig.cache_location = cacheLoc.toLatin1().constData();
-    spconfig.settings_location = cacheLoc.toLatin1().constData();
+    spconfig.cache_location = "cache";
+    spconfig.settings_location = "cache";
     spconfig.application_key = g_appkey;
     spconfig.application_key_size = g_appkey_size;
     spconfig.callbacks = &m_sp_callbacks;
-    spconfig.user_agent = "MeeSpot";
+    spconfig.user_agent = "Qtify";
     spconfig.tracefile = NULL;
 
     sp_error error = sp_session_create(&spconfig, &m_sp_session);
@@ -604,7 +605,7 @@ QSpotifySession *QSpotifySession::instance()
     if (!m_instance) {
         m_instance = new QSpotifySession;
         m_instance->init();
-        g_no_audio = qApp->arguments().contains(QLatin1String("-no-audio"));
+		g_no_audio = qApp->arguments().contains(QLatin1String("-no-audio"));
     }
     return m_instance;
 }
@@ -1053,7 +1054,7 @@ QImage QSpotifySession::requestSpotifyImage(const QString &id)
     return im;
 }
 
-static void callback_image_loaded(sp_image *image, void *)
+static void SP_CALLCONV callback_image_loaded(sp_image *image, void *)
 {
     QCoreApplication::postEvent(QSpotifySession::instance(), new QSpotifyReceiveImageEvent(image));
 }

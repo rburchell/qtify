@@ -42,6 +42,8 @@ INCLUDEPATH += $$PWD/../libspotify/include
 macx {
     LIBS += -F$$PWD/../libspotify/lib -framework libspotify
 
+} else:win32 {
+    LIBS += -L$$PWD/../libspotify/lib -llibspotify
 } else {
     LIBS += -L$$PWD/../libspotify/lib -lspotify
 }

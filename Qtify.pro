@@ -1,4 +1,5 @@
 QT+= widgets qml quick
+CONFIG += console
 
 include(libQtSpotify/libQtSpotify.pri)
 

@@ -58,7 +58,7 @@
 static QHash<sp_albumbrowse*, QSpotifyAlbumBrowse*> g_albumBrowseObjects;
 static QMutex g_mutex;
 
-static void callback_albumbrowse_complete(sp_albumbrowse *result, void *)
+static void SP_CALLCONV callback_albumbrowse_complete(sp_albumbrowse *result, void *)
 {
     QMutexLocker lock(&g_mutex);
     QSpotifyAlbumBrowse *s = g_albumBrowseObjects.value(result);
@@ -210,8 +210,8 @@ void QSpotifyAlbumBrowse::setStarred(bool s)
         return;
 
     int c = m_albumTracks->m_tracks.count();
-    const sp_track *tracks[c];
+	QVector<sp_track*> tracks;
     for (int i = 0; i < c; ++i)
         tracks[i] = m_albumTracks->m_tracks.at(i)->sptrack();
-    sp_track_set_starred(QSpotifySession::instance()->spsession(), const_cast<sp_track* const*>(tracks), c, s);
+    sp_track_set_starred(QSpotifySession::instance()->spsession(), const_cast<sp_track* const*>(tracks.data()), c, s);
 }

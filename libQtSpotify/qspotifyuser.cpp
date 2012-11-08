@@ -222,10 +222,10 @@ bool QSpotifyUser::createPlaylistFromAlbum(QSpotifyAlbumBrowse *album)
         return false;
 
     int c = album->m_albumTracks->m_tracks.count();
-    const sp_track *tracks[c];
+	QVector<sp_track*> tracks;
     for (int i = 0; i < c; ++i)
         tracks[i] = album->m_albumTracks->m_tracks.at(i)->sptrack();
-    sp_playlist_add_tracks(pl, const_cast<sp_track* const*>(tracks), c, 0, QSpotifySession::instance()->spsession());
+    sp_playlist_add_tracks(pl, const_cast<sp_track* const*>(tracks.data()), c, 0, QSpotifySession::instance()->spsession());
     return true;
 }
 

@@ -118,22 +118,22 @@ private:
     bool m_seen;
 };
 
-static void callback_playlist_state_changed(sp_playlist *playlist, void *)
+static void SP_CALLCONV callback_playlist_state_changed(sp_playlist *playlist, void *)
 {
     QCoreApplication::postEvent(g_playlistObjects.value(playlist), new QEvent(QEvent::User));
 }
 
-static void callback_playlist_metadata_updated(sp_playlist *playlist, void *)
+static void SP_CALLCONV callback_playlist_metadata_updated(sp_playlist *playlist, void *)
 {
     QCoreApplication::postEvent(g_playlistObjects.value(playlist), new QEvent(QEvent::Type(QEvent::User + 1)));
 }
 
-static void callback_playlist_renamed(sp_playlist *playlist, void *)
+static void SP_CALLCONV callback_playlist_renamed(sp_playlist *playlist, void *)
 {
     QCoreApplication::postEvent(g_playlistObjects.value(playlist), new QEvent(QEvent::Type(QEvent::User + 2)));
 }
 
-static void callback_tracks_added(sp_playlist *pl, sp_track *const *tracks, int num_tracks, int position, void *)
+static void SP_CALLCONV callback_tracks_added(sp_playlist *pl, sp_track *const *tracks, int num_tracks, int position, void *)
 {
     QVector<sp_track*> vec;
     for (int i = 0; i < num_tracks; ++i)
@@ -141,7 +141,7 @@ static void callback_tracks_added(sp_playlist *pl, sp_track *const *tracks, int 
     QCoreApplication::postEvent(g_playlistObjects.value(pl), new QSpotifyTracksAddedEvent(vec, position));
 }
 
-static void callback_tracks_removed(sp_playlist *pl, const int *tracks, int num_tracks, void *)
+static void SP_CALLCONV callback_tracks_removed(sp_playlist *pl, const int *tracks, int num_tracks, void *)
 {
     QVector<int> vec;
     for (int i = 0; i < num_tracks; ++i)
@@ -149,7 +149,7 @@ static void callback_tracks_removed(sp_playlist *pl, const int *tracks, int num_
     QCoreApplication::postEvent(g_playlistObjects.value(pl), new QSpotifyTracksRemovedEvent(vec));
 }
 
-static void callback_tracks_moved(sp_playlist *pl, const int *tracks, int num_tracks, int new_position, void *)
+static void SP_CALLCONV callback_tracks_moved(sp_playlist *pl, const int *tracks, int num_tracks, int new_position, void *)
 {
     QVector<int> vec;
     for (int i = 0; i < num_tracks; ++i)
@@ -157,7 +157,7 @@ static void callback_tracks_moved(sp_playlist *pl, const int *tracks, int num_tr
     QCoreApplication::postEvent(g_playlistObjects.value(pl), new QSpotifyTracksMovedEvent(vec, new_position));
 }
 
-static void callback_track_seen_changed(sp_playlist *pl, int position, bool seen, void *)
+static void SP_CALLCONV callback_track_seen_changed(sp_playlist *pl, int position, bool seen, void *)
 {
     QCoreApplication::postEvent(g_playlistObjects.value(pl), new QSpotifyTrackSeenEvent(position, seen));
 }
@@ -442,10 +442,10 @@ void QSpotifyPlaylist::addAlbum(QSpotifyAlbumBrowse *album)
     if (c < 1)
         return;
 
-    const sp_track *tracks[c];
+	QVector<sp_track*> tracks;
     for (int i = 0; i < c; ++i)
         tracks[i] = album->m_albumTracks->m_tracks.at(i)->sptrack();
-    sp_playlist_add_tracks(m_sp_playlist, const_cast<sp_track* const*>(tracks), c, m_trackList->m_tracks.count(), QSpotifySession::instance()->spsession());
+    sp_playlist_add_tracks(m_sp_playlist, const_cast<sp_track* const*>(tracks.data()), c, m_trackList->m_tracks.count(), QSpotifySession::instance()->spsession());
 }
 
 void QSpotifyPlaylist::rename(const QString &name)
