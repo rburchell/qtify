@@ -59,3 +59,8 @@ OTHER_FILES += \
 
 OTHER_FILES += \
     qml/HorizontalScrollBarDelegate.qml
+
+MOC_DIR = ./.moc
+OBJECTS_DIR = ./.obj
+UI_DIR = ./.ui
+RCC_DIR = ./.rcc
