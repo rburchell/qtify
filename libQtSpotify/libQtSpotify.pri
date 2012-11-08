@@ -1,5 +1,5 @@
 
-QT += network multimedia systeminfo
+QT += network multimedia
 
 INCLUDEPATH += $$PWD
 
