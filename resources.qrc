@@ -108,5 +108,6 @@
         <file>qml/VerticalScrollBarDelegate.qml</file>
         <file>qml/HorizontalScrollBarDelegate.qml</file>
         <file>qml/images/scrollbar-corner.png</file>
+        <file>qml/images/qt_icon.png</file>
     </qresource>
 </RCC>
