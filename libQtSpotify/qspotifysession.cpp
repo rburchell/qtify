@@ -535,8 +535,13 @@ void QSpotifySession::init()
 
     QString cacheLoc = QCoreApplication::applicationDirPath() + QLatin1String("/cache");
     spconfig.api_version = SPOTIFY_API_VERSION;
+#ifdef Q_OS_WIN
     spconfig.cache_location = "cache";
     spconfig.settings_location = "cache";
+#else
+    spconfig.cache_location = cacheLoc.toLatin1().constData();
+    spconfig.settings_location = cacheLoc.toLatin1().constData();
+#endif
     spconfig.application_key = g_appkey;
     spconfig.application_key_size = g_appkey_size;
     spconfig.callbacks = &m_sp_callbacks;

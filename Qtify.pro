@@ -69,8 +69,11 @@ RCC_DIR = ./.rcc
 
 
 macx {
+    LIBSPOTIFY.files = $$PWD/libspotify/lib/libspotify.framework
+    LIBSPOTIFY.path = Contents/Frameworks
+    QMAKE_BUNDLE_DATA += LIBSPOTIFY
 
-
+    ICON = qtify_icon.icns
 } else:win32 {
 
 } else {
