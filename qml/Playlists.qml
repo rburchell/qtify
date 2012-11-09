@@ -72,6 +72,19 @@ Rectangle {
 
         model: spotify.user.playlists
 
+        section.property: "modelData.listSection"
+        section.delegate: Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 7
+            height: section.length === 0 ? 11 : 23
+            text: section
+            verticalAlignment: Text.AlignVCenter
+            color: "#868686"
+            style: Text.Sunken
+            font.capitalization: Font.AllUppercase
+            font.pixelSize: 11
+        }
+
         rowDelegate: BorderImage {
             id: rowBackground
             border.top: 1

@@ -527,10 +527,12 @@ int QSpotifyPlaylist::totalDuration() const
 
 QString QSpotifyPlaylist::listSection() const
 {
-    if (m_type == Playlist || m_type == Folder)
-        return QLatin1String("p");
+    if (m_type == Inbox)
+        return QLatin1String("Main");
+    else if (m_type == Starred)
+        return QLatin1String("Collection");
     else
-        return QLatin1String("s");
+        return QLatin1String("");
 }
 
 void QSpotifyPlaylist::removeFromContainer()
