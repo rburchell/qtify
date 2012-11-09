@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationDomain("qt.digia.com");
     QApplication::setApplicationName("Qtify");
     QApplication::setApplicationVersion("1.0.0");
-    QApplication::setStyle("cleanlooks");
+    QApplication::setStyle("fusion");
 
     QApplication app(argc, argv);
     QQuickView view;

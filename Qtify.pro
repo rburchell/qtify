@@ -1,6 +1,8 @@
 QT+= widgets qml quick
 CONFIG += console
 
+TARGET = Qtify
+
 include(libQtSpotify/libQtSpotify.pri)
 
 SOURCES += \
@@ -64,3 +66,13 @@ MOC_DIR = ./.moc
 OBJECTS_DIR = ./.obj
 UI_DIR = ./.ui
 RCC_DIR = ./.rcc
+
+
+macx {
+
+
+} else:win32 {
+
+} else {
+    QMAKE_LFLAGS += -Wl,-rpath,$$PWD/libspotify/lib
+}
