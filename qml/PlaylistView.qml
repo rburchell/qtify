@@ -1,4 +1,3 @@
-import QtQuick 2.0
 /****************************************************************************
 **
 ** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
@@ -40,7 +39,8 @@ import QtQuick 2.0
 **
 ****************************************************************************/
 
-import QtDesktop 0.2
+import QtQuick 2.0
+import QtDesktop 1.0
 import QtSpotify 1.0
 
 Rectangle {
