@@ -76,7 +76,7 @@ BorderImage {
         anchors.leftMargin: 35
         placeholderText: "Search"
         font.family: "Arial"
-        font.pixelSize: 10
+        font.pixelSize: 12
         width: 225
         Keys.onReturnPressed: doSearch()
         Keys.onEnterPressed: doSearch()

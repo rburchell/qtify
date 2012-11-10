@@ -40,15 +40,21 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtDesktop 1.0
 
 Item {
     id: hsbroot
     anchors.fill: parent
     anchors.leftMargin: -1
+    anchors.topMargin: dummystyle.style === "mac" ? -1 : 0
 
     property string activeControl: ""
     property real value: 0
     property int maximumValue: 0
+
+    StyleItem {
+        id: dummystyle
+    }
 
     function pixelMetric(arg) {
         if (arg === "scrollbarExtent")

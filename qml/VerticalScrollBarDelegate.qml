@@ -40,11 +40,17 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtDesktop 1.0
 
 Item {
     id: vsbroot
     anchors.fill: parent
     anchors.topMargin: -1
+    anchors.leftMargin: dummystyle.style === "mac" ? -1 : 0
+
+    StyleItem {
+        id: dummystyle
+    }
 
     property string activeControl: ""
     property real value: 0
