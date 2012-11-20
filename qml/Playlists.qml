@@ -62,8 +62,10 @@ Rectangle {
             horizontalScrollBar.visible = false
         }
 
-        verticalScrollBar.style: VerticalScrollBarDelegate {
-            anchors.topMargin: -10
+        verticalScrollBar.delegate: VerticalScrollBarDelegate {
+            value: tableView.verticalScrollBar.value
+            maximumValue: tableView.verticalScrollBar.maximumValue
+            anchors.topMargin: -9
         }
 
         TableColumn{ role: "name" ; width: 200 }

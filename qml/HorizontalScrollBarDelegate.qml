@@ -41,30 +41,91 @@
 
 import QtQuick 2.0
 import QtDesktop 1.0
-import QtDesktop.Styles 1.0
 
-ScrollBarStyle {
+Item {
     id: hsbroot
     anchors.fill: parent
     anchors.leftMargin: -1
+    anchors.topMargin: dummystyle.style === "mac" ? -1 : 0
 
-    incrementControl: Image {
+    property string activeControl: ""
+    property real value: 0
+    property int maximumValue: 0
+
+    StyleItem {
+        id: dummystyle
+    }
+
+    function pixelMetric(arg) {
+        if (arg === "scrollbarExtent")
+            return bg.height;
+
+        return 0;
+    }
+
+    function styleHint(arg) {
+        return false;
+    }
+
+    function hitTest(argX, argY) {
+        if (itemIsHit(handle, argX, argY))
+            return "handle"
+        else if (itemIsHit(upControl, argX, argY))
+            return "up";
+        else if (itemIsHit(downControl, argX, argY))
+            return "down";
+        else if (itemIsHit(bg, argX, argY)) {
+            if (argX < handle.x)
+                return "upPage"
+            else
+                return "downPage"
+        }
+
+        return "none";
+    }
+
+    function subControlRect(arg) {
+        if (arg === "handle")
+            return Qt.rect(handle.x, handle.y, handle.width, handle.height);
+        else if (arg === "groove")
+            return Qt.rect(16, 0, hsbroot.width - 32, hsbroot.height);
+        return Qt.rect(0,0,0,0);
+    }
+
+    function itemIsHit(argItem, argX, argY) {
+        var pos = argItem.mapFromItem(hsbroot, argX, argY);
+        return (pos.x >= 0 && pos.x <= argItem.width && pos.y >= 0 && pos.y <= argItem.height);
+    }
+
+
+
+    Image {
+        id: upControl
         anchors.left: parent.left
-        source: pressed ? "images/scrollbar-horizontal-up-pressed.png" : "images/scrollbar-horizontal-up.png"
+        source: activeControl === "up" ? "images/scrollbar-horizontal-up-pressed.png" : "images/scrollbar-horizontal-up.png"
     }
 
-    background: BorderImage {
+    BorderImage {
+        id: bg
+        anchors.left: upControl.right
+        anchors.right: downControl.left
         source: "images/scrollbar-horizontal-bg.png"
-        border.top: 1
+        border.top: 1;
     }
 
-     decrementControl: Image {
-        source: pressed  ? "images/scrollbar-horizontal-down-pressed.png" : "images/scrollbar-horizontal-down.png"
+    Image {
+        id: downControl
+        anchors.right: parent.right
+        source: activeControl === "down" ? "images/scrollbar-horizontal-down-pressed.png" : "images/scrollbar-horizontal-down.png"
     }
 
-    handle: BorderImage {
+    BorderImage {
+        id: handle
         source: "images/scrollbar-horizontal-handle.png"
         border.left: 7; border.top: 7
         border.right: 7; border.bottom: 7
+        width: Math.max(20, bg.width - maximumValue + 8)
+        anchors.left: bg.left
+        anchors.leftMargin: -4 + (hsbroot.value / maximumValue) * (bg.width + 8 - width)
     }
 }

@@ -92,7 +92,7 @@ BorderImage {
 
         onValueChanged: spotify.setVolume(value)
 
-        style: CustomSliderDelegate {
+        delegate: CustomSliderDelegate {
             slider: volumeSlider
         }
     }
@@ -154,7 +154,7 @@ BorderImage {
             }
         }
 
-        style: CustomSliderDelegate {
+        delegate: CustomSliderDelegate {
             slider: positionSlider
         }
     }

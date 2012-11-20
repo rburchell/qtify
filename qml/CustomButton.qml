@@ -41,7 +41,6 @@
 
 import QtQuick 2.0
 import QtDesktop 1.0
-import QtDesktop.Styles 1.0
 
 Button {
     id: button
@@ -53,24 +52,23 @@ Button {
     property int borderRight: 0
     property string text: ""
 
-    style: ButtonStyle {background:BorderImage {
-            id: dele
-            source : iconName.length ? ("images/" + iconName + (hoverEnabled && containsMouse && !button.pressed ? "-hover" : "") + (button.pressed ? "-pressed" : "") + (button.enabled ? "" : "-disabled") + ".png") : ""
-            border.top: button.borderTop
-            border.bottom: button.borderBottom
-            border.left: button.borderLeft
-            border.right: button.borderRight
+    delegate: BorderImage {
+        id: dele
+        source : iconName.length ? ("images/" + iconName + (hoverEnabled && containsMouse && !button.pressed ? "-hover" : "") + (button.pressed ? "-pressed" : "") + (button.enabled ? "" : "-disabled") + ".png") : ""
+        border.top: button.borderTop
+        border.bottom: button.borderBottom
+        border.left: button.borderLeft
+        border.right: button.borderRight
 
-            Text {
-                id: textItem
-                anchors.centerIn: parent
-                visible: text.length
-                text: button.text
-                font.pixelSize: 12
-                color: button.enabled ? "white" : "#999999"
-                style: button.enabled ? Text.Sunken : Text.Normal
-                styleColor: "#222222"
-            }
+        Text {
+            id: textItem
+            anchors.centerIn: parent
+            visible: text.length
+            text: button.text
+            font.pixelSize: 12
+            color: button.enabled ? "white" : "#999999"
+            style: button.enabled ? Text.Sunken : Text.Normal
+            styleColor: "#222222"
         }
     }
 }

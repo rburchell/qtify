@@ -41,30 +41,91 @@
 
 import QtQuick 2.0
 import QtDesktop 1.0
-import QtDesktop.Styles 1.0
 
-ScrollBarStyle {
+Item {
     id: vsbroot
     anchors.fill: parent
     anchors.topMargin: -1
-    handleOverlap: 4
+    anchors.leftMargin: dummystyle.style === "mac" ? -1 : 0
 
-    decrementControl:  Image {
-        source: pressed ? "images/scrollbar-vertical-up-pressed.png" : "images/scrollbar-vertical-up.png"
+    StyleItem {
+        id: dummystyle
     }
 
-    background: BorderImage {
+    property string activeControl: ""
+    property real value: 0
+    property int maximumValue: 0
+
+    function pixelMetric(arg) {
+        if (arg === "scrollbarExtent")
+            return bg.width;
+
+        return 0;
+    }
+
+    function styleHint(arg) {
+        return false;
+    }
+
+    function hitTest(argX, argY) {
+        if (itemIsHit(handle, argX, argY))
+            return "handle"
+        else if (itemIsHit(upControl, argX, argY))
+            return "up";
+        else if (itemIsHit(downControl, argX, argY))
+            return "down";
+        else if (itemIsHit(bg, argX, argY)) {
+            if (argY < handle.y)
+                return "upPage"
+            else
+                return "downPage"
+        }
+
+        return "none";
+    }
+
+    function subControlRect(arg) {
+        if (arg === "handle")
+            return Qt.rect(handle.x, handle.y, handle.width, handle.height);
+        else if (arg === "groove")
+            return Qt.rect(0, 16, vsbroot.width, vsbroot.height - 32);
+        return Qt.rect(0,0,0,0);
+    }
+
+    function itemIsHit(argItem, argX, argY) {
+        var pos = argItem.mapFromItem(vsbroot, argX, argY);
+        return (pos.x >= 0 && pos.x <= argItem.width && pos.y >= 0 && pos.y <= argItem.height);
+    }
+
+
+
+    Image {
+        id: upControl
+        anchors.top: parent.top
+        source: activeControl === "up" ? "images/scrollbar-vertical-up-pressed.png" : "images/scrollbar-vertical-up.png"
+    }
+
+    BorderImage {
+        id: bg
+        anchors.top: upControl.bottom
+        anchors.bottom: downControl.top
         source: "images/scrollbar-vertical-bg.png"
         border.left: 1;
     }
 
-    incrementControl: Image {
-        source: pressed ? "images/scrollbar-vertical-down-pressed.png" : "images/scrollbar-vertical-down.png"
+    Image {
+        id: downControl
+        anchors.bottom: parent.bottom
+        source: activeControl === "down" ? "images/scrollbar-vertical-down-pressed.png" : "images/scrollbar-vertical-down.png"
     }
 
-    handle: BorderImage {
+    BorderImage {
+        id: handle
         source: "images/scrollbar-vertical-handle.png"
         border.left: 7; border.top: 7
         border.right: 7; border.bottom: 7
+        height: Math.max(20, bg.height - maximumValue + 8)
+        anchors.top: bg.top
+        anchors.topMargin: -4 + (vsbroot.value / maximumValue) * (bg.height + 8 - height)
     }
 }
