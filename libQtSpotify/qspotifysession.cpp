@@ -566,10 +566,10 @@ void QSpotifySession::init()
 
         checkNetworkAccess();
 
-        StreamingQuality quality = StreamingQuality(settings.value("streamingQuality", int(LowQuality)).toInt());
-        setStreamingQuality(quality);
+//        StreamingQuality quality = StreamingQuality(settings.value("streamingQuality", int(UltraQuality)).toInt());
+        setStreamingQuality(UltraQuality);
 
-        StreamingQuality syncQuality = StreamingQuality(settings.value("syncQuality", int(HighQuality)).toInt());
+        StreamingQuality syncQuality = StreamingQuality(settings.value("syncQuality", int(UltraQuality)).toInt());
         setSyncQuality(syncQuality);
 
         bool syncMobile = settings.value("syncOverMobile", false).toBool();
