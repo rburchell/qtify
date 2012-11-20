@@ -43,35 +43,33 @@ import QtQuick 2.0
 import QtDesktop 1.0
 import QtDesktop.Styles 1.0
 
-Button {
-    id: button
-    property string iconName: ""
-    property bool hoverEnabled: false
-    property int borderTop: 0
-    property int borderBottom: 0
-    property int borderLeft: 0
-    property int borderRight: 0
+SliderStyle {
+    background: Item {
+        BorderImage {
+            width: parent.width
+            anchors.verticalCenter: parent.verticalCenter
 
-    style: ButtonStyle {
-        background: BorderImage {
-            source : iconName.length ? ("images/" + iconName + (hoverEnabled && containsMouse && !button.pressed ? "-hover" : "")
-                                        + (button.pressed ? "-pressed" : "")
-                                        + (button.enabled ? "" : "-disabled")
-                                        + ".png")
-                                     : ""
-            border.top: button.borderTop
-            border.bottom: button.borderBottom
-            border.left: button.borderLeft
-            border.right: button.borderRight
-
-            width: button.width ? button.width : implicitWidth
-            height: button.height ? button.height : implicitHeight
+            source: "images/slider-bg.png"
+            border.left: 4
+            border.right: 4
+            border.top:  2
+            border.bottom: 2
         }
 
-        backgroundColor: button.enabled ? "white" : "#999999"
-//        text.font.pixelSize: 12
-//        text.color: button.enabled ? "white" : "#999999"
-//        text.style: button.enabled ? Text.Sunken : Text.Normal
-//        text.styleColor: "#222222"
+        BorderImage {
+            anchors.verticalCenter: parent.verticalCenter
+            width: control.value / control.maximumValue * (parent.width - 9) + 9
+            source: "images/slider-fg.png"
+            border.left: 4
+            border.right: 4
+            border.top:  2
+            border.bottom: 2
+            visible: control.enabled
+        }
+    }
+
+    handle: Image {
+        source: "images/slider-knob" + (control.pressed ? "-pressed" : "") + ".png"
+        visible: control.enabled
     }
 }

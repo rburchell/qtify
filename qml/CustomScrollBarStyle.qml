@@ -41,41 +41,29 @@
 
 import QtQuick 2.0
 import QtDesktop 1.0
+import QtDesktop.Styles 1.0
 
-Item {
-    property Slider slider: null
-    implicitWidth: content.width
-    implicitHeight: content.height
+ScrollBarStyle {
+    scrollToClickPosition: false
+    minimumHandleLength: 20
+    handleOverlap: 4
 
-    BorderImage {
-        id: content
+    background: BorderImage {
+        source: horizontal ? "images/scrollbar-horizontal-bg.png" : "images/scrollbar-vertical-bg.png"
+        border.left: 1;
+    }
 
-        anchors.centerIn: parent
-        width: parent.width
-        source: "images/slider-bg.png"
-        border.left: 4
-        border.right: 4
-        border.top:  2
-        border.bottom: 2
+    incrementControl: Image {
+        source: "images/scrollbar" + (horizontal ? "-horizontal" : "-vertical") + "-down" + (pressed ? "-pressed" : "") + ".png"
+    }
 
-        BorderImage {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.right: knob.right
-            source: "images/slider-fg.png"
-            border.left: 4
-            border.right: 4
-            border.top:  2
-            border.bottom: 2
-            visible: knob.visible
-        }
+    decrementControl: Image {
+        source: "images/scrollbar" + (horizontal ? "-horizontal" : "-vertical") + "-up" + (pressed ? "-pressed" : "") + ".png"
+    }
 
-        Image {
-            id: knob
-            anchors.verticalCenter: parent.verticalCenter
-            source: "images/slider-knob" + (slider && slider.pressed ? "-pressed" : "") + ".png"
-            visible: slider && slider.enabled
-            x: slider ? Math.round(((slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue)) * (parent.width - width)) : 0
-        }
+    handle: BorderImage {
+        source: horizontal ? "images/scrollbar-horizontal-handle.png" : "images/scrollbar-vertical-handle.png"
+        border.left: 7; border.top: 7
+        border.right: 7; border.bottom: 7
     }
 }

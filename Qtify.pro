@@ -39,7 +39,7 @@ OTHER_FILES += \
     qml/CustomButton.qml
 
 OTHER_FILES += \
-    qml/CustomSliderDelegate.qml
+    qml/CustomSliderStyle.qml
 
 OTHER_FILES += \
     qml/NowPlaying.qml
@@ -57,10 +57,7 @@ OTHER_FILES += \
     qml/SearchResults.qml
 
 OTHER_FILES += \
-    qml/VerticalScrollBarDelegate.qml
-
-OTHER_FILES += \
-    qml/HorizontalScrollBarDelegate.qml
+    qml/CustomScrollBarStyle.qml
 
 MOC_DIR = ./.moc
 OBJECTS_DIR = ./.obj

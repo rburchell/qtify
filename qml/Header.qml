@@ -41,6 +41,7 @@
 
 import QtQuick 2.0
 import QtDesktop 1.0
+import QtDesktop.Styles 1.0
 import QtSpotify 1.0
 
 BorderImage {
@@ -73,7 +74,7 @@ BorderImage {
         id: searchField
         anchors.bottom: buttonRow.bottom
         anchors.left: buttonRow.right
-        anchors.leftMargin: 35
+        anchors.leftMargin: 8
         placeholderText: "Search"
         font.family: "Arial"
         font.pixelSize: 12
@@ -89,25 +90,23 @@ BorderImage {
             }
         }
 
-        delegate: BorderImage {
-            anchors.fill: parent
-            anchors.leftMargin: -25
-            anchors.rightMargin: -20
-            border.left: 14
-            border.right: 14
-            border.top: 14
-            border.bottom: 14
-            source: searchField.activeFocus ? "images/toolbar-search-bg-focus.png" : "images/toolbar-search-bg.png"
+        style: TextFieldStyle {
+            leftMargin: 30
+            rightMargin: 25
 
-            MouseArea {
-                anchors.fill: parent
+            background: BorderImage {
+                border.left: 14
+                border.right: 14
+                border.top: 14
+                border.bottom: 14
+                source: searchField.activeFocus ? "images/toolbar-search-bg-focus.png" : "images/toolbar-search-bg.png"
             }
         }
 
         Image {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: -18
+            anchors.leftMargin: 8
             source: "images/toolbar-search_glass.png"
         }
 
@@ -115,7 +114,7 @@ BorderImage {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             iconName: "toolbar-search-clear"
-            anchors.rightMargin: -14
+            anchors.rightMargin: 6
             visible: searchField.text.length
             onClicked: searchField.text = ""
         }

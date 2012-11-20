@@ -53,14 +53,12 @@ Item {
         frame: false
         //    cacheBuffer: 5000
 
-        verticalScrollBar.delegate: VerticalScrollBarDelegate {
-            value: tableView.verticalScrollBar.value
-            maximumValue: tableView.verticalScrollBar.maximumValue
+        Component.onCompleted: {
+            verticalScrollBar.anchors.topMargin = 0
         }
-        horizontalScrollBar.delegate: HorizontalScrollBarDelegate {
-            value: tableView.horizontalScrollBar.value
-            maximumValue: tableView.horizontalScrollBar.maximumValue
-        }
+
+        verticalScrollBar.style: CustomScrollBarStyle { }
+        horizontalScrollBar.style: CustomScrollBarStyle { }
 
         TableColumn{ role: "isStarred" ; title: ""; width: 30 }
         TableColumn{ role: "name" ; title: "Track"; width: 220 }

@@ -92,9 +92,7 @@ BorderImage {
 
         onValueChanged: spotify.setVolume(value)
 
-        delegate: CustomSliderDelegate {
-            slider: volumeSlider
-        }
+        style: CustomSliderStyle { }
     }
     Image {
         id: volumeIcon1
@@ -154,9 +152,7 @@ BorderImage {
             }
         }
 
-        delegate: CustomSliderDelegate {
-            slider: positionSlider
-        }
+        style: CustomSliderStyle { }
     }
 
     // Current track time

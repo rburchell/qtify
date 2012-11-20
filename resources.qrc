@@ -41,7 +41,7 @@
         <file>qml/images/play-pressed.png</file>
         <file>qml/images/play.png</file>
         <file>qml/CustomButton.qml</file>
-        <file>qml/CustomSliderDelegate.qml</file>
+        <file>qml/CustomSliderStyle.qml</file>
         <file>qml/images/slider-knob-pressed.png</file>
         <file>qml/images/slider-knob.png</file>
         <file>qml/images/slider-fg.png</file>
@@ -105,8 +105,7 @@
         <file>qml/images/scrollbar-vertical-handle.png</file>
         <file>qml/images/scrollbar-vertical-up-pressed.png</file>
         <file>qml/images/scrollbar-vertical-up.png</file>
-        <file>qml/VerticalScrollBarDelegate.qml</file>
-        <file>qml/HorizontalScrollBarDelegate.qml</file>
+        <file>qml/CustomScrollBarStyle.qml</file>
         <file>qml/images/scrollbar-corner.png</file>
         <file>qml/images/qt_icon.png</file>
     </qresource>
