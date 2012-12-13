@@ -57,6 +57,7 @@
         <file>qml/images/volume-2.png</file>
         <file>qml/images/volume-1.png</file>
         <file>qml/NowPlaying.qml</file>
+        <file>qml/AlbumArt.qml</file>
         <file>qml/images/now_playing-art_placeholder-album.png</file>
         <file>qml/images/now_playing-hrule.png</file>
         <file>qml/SpotifyImage.qml</file>

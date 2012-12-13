@@ -60,35 +60,26 @@ Item {
         }
     }
 
-    SpotifyImage {
+    AlbumArt {
         id: albumart
         width: parent.width
         height: width
-        smooth: true
-        spotifyId: spotify.currentTrack ? spotify.currentTrack.albumCoverId : ""
-        defaultImage: "images/now_playing-art_placeholder-album.png"
-        fillMode: Image.PreserveAspectCrop
 
         Image {
             width: parent.width
             source: "images/now_playing-hrule.png"
         }
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
+        CustomButton {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.topMargin: 6
+            anchors.rightMargin: 6
+            iconName: "now-playing-collapse"
+            opacity: parent.containsMouse ? 1.0 : 0.0
+            Behavior on opacity { NumberAnimation { duration: 300 } }
 
-            CustomButton {
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.topMargin: 6
-                anchors.rightMargin: 6
-                iconName: "now-playing-collapse"
-                opacity: parent.containsMouse ? 1.0 : 0.0
-                Behavior on opacity { NumberAnimation { duration: 300 } }
-
-                onClicked: toggleMinimizeMaximize()
-            }
+            onClicked: toggleMinimizeMaximize()
         }
     }
 
@@ -99,22 +90,13 @@ Item {
         height: 51
         source: "images/now_playing-info-bg.png"
 
-        MouseArea {
-            id: mouseHovered
-            anchors.fill: parent
-            hoverEnabled: true
-        }
-
-        SpotifyImage {
+        AlbumArt {
             id: miniart
             x: maximized ? -width : 0
             Behavior on x { NumberAnimation { duration: 200 } }
             width: height
             height: parent.height - 2
             anchors.bottom: parent.bottom
-            spotifyId: spotify.currentTrack ? spotify.currentTrack.albumCoverId : ""
-            defaultImage: "images/now_playing-art_placeholder-album.png"
-            fillMode: Image.PreserveAspectCrop
 
             CustomButton {
                 anchors.top: parent.top
@@ -122,7 +104,7 @@ Item {
                 anchors.topMargin: 6
                 anchors.rightMargin: 6
                 iconName: "now-playing-expand"
-                opacity: mouseHovered.containsMouse || containsMouse ? 1.0 : 0.0
+                opacity: parent.containsMouse ? 1.0 : 0.0
                 Behavior on opacity { NumberAnimation { duration: 300 } }
 
                 onClicked: toggleMinimizeMaximize()
