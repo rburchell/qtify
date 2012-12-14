@@ -48,18 +48,8 @@ Rectangle {
 
     color: "#373737"
 
-    Item {
-        id: header
-        anchors.top: parent.top
-        width: parent.width
-        height: 0
-
-    }
-
     TrackListView {
-        anchors.top: header.bottom
-        anchors.bottom: parent.bottom
-        width: parent.width
+        anchors.fill: parent
         model: search && !search.busy ? search.tracks : 0
     }
 
