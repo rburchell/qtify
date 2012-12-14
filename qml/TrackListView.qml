@@ -123,12 +123,9 @@ Item {
             ]
         }
 
-        itemDelegate: Item {
-
-            Loader {
-                anchors.fill: parent
-                sourceComponent: role === "isStarred" ? imageComponent : textComponent
-            }
+        itemDelegate: Loader {
+            anchors.fill: parent
+            sourceComponent: role === "isStarred" ? imageComponent : textComponent
 
             Component {
                 id: imageComponent
@@ -145,43 +142,41 @@ Item {
 
             Component {
                 id: textComponent
-                Item {
-                    Text {
-                        id: text
-                        anchors.fill: parent
-                        anchors.leftMargin: 5
-                        anchors.rightMargin: 5
-                        anchors.topMargin: 1
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignLeft
-                        text: itemValue
-                        elide: Text.ElideRight
-                        font.pixelSize: 11
-                        opacity: 0.79
+                Text {
+                    id: text
+                    anchors.fill: parent
+                    anchors.leftMargin: 5
+                    anchors.rightMargin: 5
+                    anchors.topMargin: 1
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    text: itemValue
+                    elide: Text.ElideRight
+                    font.pixelSize: 11
+                    opacity: 0.79
 
-                        states: [
-                            State {
-                                name: "normal"
-                                when: !itemSelected && !modelData.isCurrentPlayingTrack
-                                PropertyChanges { target: text; color: "#ffffff" }
-                            },
-                            State {
-                                name: "playing"
-                                when: !itemSelected && modelData.isCurrentPlayingTrack
-                                PropertyChanges { target: text; color: "#abf781" }
-                            },
-                            State {
-                                name: "selectedActiveFocus"
-                                when: itemSelected && tableView.activeFocus
-                                PropertyChanges { target: text; color: "#111111" }
-                            },
-                            State {
-                                name: "selectedNoFocus"
-                                when: itemSelected && !tableView.activeFocus
-                                PropertyChanges { target: text; color: "#ffffff" }
-                            }
-                        ]
-                    }
+                    states: [
+                        State {
+                            name: "normal"
+                            when: !itemSelected && !modelData.isCurrentPlayingTrack
+                            PropertyChanges { target: text; color: "#ffffff" }
+                        },
+                        State {
+                            name: "playing"
+                            when: !itemSelected && modelData.isCurrentPlayingTrack
+                            PropertyChanges { target: text; color: "#abf781" }
+                        },
+                        State {
+                            name: "selectedActiveFocus"
+                            when: itemSelected && tableView.activeFocus
+                            PropertyChanges { target: text; color: "#111111" }
+                        },
+                        State {
+                            name: "selectedNoFocus"
+                            when: itemSelected && !tableView.activeFocus
+                            PropertyChanges { target: text; color: "#ffffff" }
+                        }
+                    ]
                 }
             }
         }
