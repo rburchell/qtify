@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQuickView view;
     view.setMinimumSize(QSize(640, 480));
-    view.setWindowTitle("Qtify");
+    view.setTitle("Qtify");
 
     registerQmlTypes();
     view.setResizeMode(QQuickView::SizeRootObjectToView);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:/qml/main.qml"));
 
     view.show();
-    view.setWindowIcon(QPixmap(":/qml/images/qt_icon.png"));
+    view.setIcon(QPixmap(":/qml/images/qt_icon.png"));
 
     return app.exec();
 }
