@@ -40,12 +40,13 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 import QtSpotify 1.0
 
 
 Rectangle {
-    property variant selectedPlaylist: tableView.model[tableView.currentIndex]
+    property variant selectedPlaylist: tableView.model[tableView.currentRow]
 
     color: "#474747"
 
@@ -54,18 +55,18 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: 8
 
-        frame: false
+        frameVisible: false
         headerVisible: false
-        alternateRowColor: false
+        alternatingRowColors: false
         backgroundColor: "transparent"
         Component.onCompleted:  {
             verticalScrollBar.anchors.topMargin = -8
             horizontalScrollBar.visible = false
         }
 
-        verticalScrollBar.style: CustomScrollBarStyle { }
+        style: TableViewStyle { scrollBar: CustomScrollBarStyle { } }
 
-        TableColumn{ role: "name" ; width: 200 }
+        TableViewColumn{ role: "name" ; width: 200 }
 
         model: spotify.user.playlists
 
@@ -89,17 +90,17 @@ Rectangle {
             states: [
                 State {
                     name: "normal"
-                    when: !itemSelected
+                    when: !rowSelected
                     PropertyChanges { target: rowBackground; source: "" }
                 },
                 State {
                     name: "selectedActiveFocus"
-                    when: itemSelected && tableView.activeFocus
+                    when: rowSelected && tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselectedfocus.png" }
                 },
                 State {
                     name: "selectedNoFocus"
-                    when: itemSelected && !tableView.activeFocus
+                    when: rowSelected && !tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselected.png" }
                 }
             ]

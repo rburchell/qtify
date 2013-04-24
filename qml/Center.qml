@@ -40,9 +40,10 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Layouts 1.0
 
-SplitterRow {
+SplitView {
 
     function showSearchResults(search) {
         mainView.setSource("SearchResults.qml", { "search": search })
@@ -51,21 +52,11 @@ SplitterRow {
     handleDelegate: Rectangle {
         width: 1
         color: "#292929"
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            anchors.leftMargin: (parent.width <= 1) ? -2 : 0
-            anchors.rightMargin: (parent.width <= 1) ? -2 : 0
-            drag.axis: Qt.YAxis
-            drag.target: handle
-            cursorShape: Qt.SplitHCursor
-        }
     }
 
     Item {
-        Splitter.maximumWidth: 300
-        Splitter.minimumWidth: 120
+        Layout.maximumWidth: 300
+        Layout.minimumWidth: 120
         width: 200
 
         Playlists {
@@ -76,6 +67,7 @@ SplitterRow {
 
             onSelectedPlaylistChanged: {
                 mainView.setSource("PlaylistView.qml", { "playlist": playlists.selectedPlaylist })
+
             }
         }
 
@@ -88,6 +80,6 @@ SplitterRow {
 
     Loader {
         id: mainView
-        Splitter.expanding: true
+        Layout.fillWidth: true
     }
 }

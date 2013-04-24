@@ -40,7 +40,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 
 Item {
     property alias model: tableView.model
@@ -50,23 +51,17 @@ Item {
         anchors.fill: parent
 
         backgroundColor: "#00000000"
-        frame: false
-        //    cacheBuffer: 5000
+        frameVisible: false
 
-        Component.onCompleted: {
-            verticalScrollBar.anchors.topMargin = 0
-        }
+        style: TableViewStyle { scrollBar: CustomScrollBarStyle { } }
 
-        verticalScrollBar.style: CustomScrollBarStyle { }
-        horizontalScrollBar.style: CustomScrollBarStyle { }
+        TableViewColumn{ role: "isStarred" ; title: ""; width: 30 }
+        TableViewColumn{ role: "name" ; title: "Track"; width: 220 }
+        TableViewColumn{ role: "artists" ; title: "Artist"; width: 140 }
+        TableViewColumn{ role: "duration" ; title: "Time"; width: 50 }
+        TableViewColumn{ role: "album" ; title: "Album"; width: 150 }
 
-        TableColumn{ role: "isStarred" ; title: ""; width: 30 }
-        TableColumn{ role: "name" ; title: "Track"; width: 220 }
-        TableColumn{ role: "artists" ; title: "Artist"; width: 140 }
-        TableColumn{ role: "duration" ; title: "Time"; width: 50 }
-        TableColumn{ role: "album" ; title: "Album"; width: 150 }
-
-        onActivated: model[currentIndex].play()
+        onActivated: model[currentRow].play()
 
         headerDelegate: BorderImage {
             source: "images/table-header.png"
@@ -97,27 +92,27 @@ Item {
             states: [
                 State {
                     name: "normal"
-                    when: !itemSelected && !itemAlternateBackground && (!modelData || !modelData.isCurrentPlayingTrack)
+                    when: !rowSelected && !alternateBackground && (!modelData || !modelData.isCurrentPlayingTrack)
                     PropertyChanges { target: rowBackground; source: "" }
                 },
                 State {
                     name: "normalalternate"
-                    when: !itemSelected && itemAlternateBackground && (!modelData || !modelData.isCurrentPlayingTrack)
+                    when: !rowSelected && alternateBackground && (!modelData || !modelData.isCurrentPlayingTrack)
                     PropertyChanges { target: rowBackground; source: "images/mainlist-row-alternate.png" }
                 },
                 State {
                     name: "normalplaying"
-                    when: !itemSelected && modelData.isCurrentPlayingTrack
+                    when: !rowSelected && modelData.isCurrentPlayingTrack
                     PropertyChanges { target: rowBackground; source: "images/mainlist-row-playing-bg.png" }
                 },
                 State {
                     name: "selectedActiveFocus"
-                    when: itemSelected && tableView.activeFocus
+                    when: rowSelected// && tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselectedfocus.png" }
                 },
                 State {
                     name: "selectedNoFocus"
-                    when: itemSelected && !tableView.activeFocus
+                    when: rowSelected && !tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselected.png" }
                 }
             ]
@@ -132,7 +127,7 @@ Item {
                 Item {
                     CustomButton {
                         anchors.centerIn: parent
-                        iconName: (modelData.isCurrentPlayingTrack && !containsMouse && !pressed ? ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (itemSelected && tableView.activeFocus ? "-activefocus" : ""))
+                        iconName: (modelData.isCurrentPlayingTrack && !__containsMouse && !pressed ? ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (itemSelected && tableView.activeFocus ? "-activefocus" : ""))
                                                                                                  : modelData.isStarred ? "star-on" : "star-off")
                         hoverEnabled: true
                         onClicked: modelData.isStarred = !modelData.isStarred

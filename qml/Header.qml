@@ -40,8 +40,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
-import QtDesktop.Styles 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 import QtSpotify 1.0
 
 BorderImage {
@@ -137,7 +137,7 @@ BorderImage {
         borderBottom: 7
         borderLeft: 7
         borderRight: 7
-        onClicked: accountMenu.visible = true
+        onClicked: accountMenu.popup()
 
         Text {
             id: accountName
@@ -158,17 +158,12 @@ BorderImage {
         }
     }
 
-    ContextMenu {
-        id: accountMenu
-        x: accountButton.x / 2
-        y: (accountButton.y + accountButton.height) / 2
-        selectedIndex: -1
-        menuItems: [
-            MenuItem {
-                text: "Log Out"
-                onTriggered: spotify.logout(false)
-            }
 
-        ]
+    Menu {
+        id: accountMenu
+        MenuItem {
+            text: "Log Out"
+            onTriggered: spotify.logout(false)
+        }
     }
 }

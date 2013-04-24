@@ -40,13 +40,12 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
+import QtQuick.Controls 1.0
 import QtSpotify 1.0
 
 Rectangle {
 
     property variant playlist: null
-
     color: "#373737"
 
     Item {

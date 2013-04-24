@@ -40,8 +40,8 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
-import QtDesktop.Styles 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 
 Button {
     id: button
@@ -54,7 +54,7 @@ Button {
 
     style: ButtonStyle {
         background: BorderImage {
-            source : iconName.length ? ("images/" + iconName + (hoverEnabled && containsMouse && !button.pressed ? "-hover" : "")
+            source : iconName.length ? ("images/" + iconName + (hoverEnabled && __containsMouse && !button.pressed ? "-hover" : "")
                                         + (button.pressed ? "-pressed" : "")
                                         + (button.enabled ? "" : "-disabled")
                                         + ".png")

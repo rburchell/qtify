@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtDesktop 1.0
+import QtQuick.Controls 1.0
 import QtSpotify 1.0
 
 Rectangle {
@@ -126,7 +126,7 @@ Rectangle {
                 id: passwordField
                 width: parent.width
                 placeholderText: "Password"
-                passwordMode: true
+                //passwordMode: true
                 Keys.onTabPressed: usernameField.forceActiveFocus()
                 Keys.onReturnPressed: {
                     if (usernameField.text.length === 0)
