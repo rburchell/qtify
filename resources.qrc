@@ -106,8 +106,8 @@
         <file>qml/images/scrollbar-vertical-handle.png</file>
         <file>qml/images/scrollbar-vertical-up-pressed.png</file>
         <file>qml/images/scrollbar-vertical-up.png</file>
-        <file>qml/CustomScrollBarStyle.qml</file>
         <file>qml/images/scrollbar-corner.png</file>
         <file>qml/images/qt_icon.png</file>
+        <file>qml/CustomTableViewStyle.qml</file>
     </qresource>
 </RCC>

@@ -91,8 +91,9 @@ BorderImage {
         }
 
         style: TextFieldStyle {
-            leftMargin: 30
-            rightMargin: 25
+
+            padding.left: 30
+            padding.right: 25
 
             background: BorderImage {
                 border.left: 14
@@ -137,7 +138,7 @@ BorderImage {
         borderBottom: 7
         borderLeft: 7
         borderRight: 7
-        onClicked: accountMenu.popup()
+        menu: accountMenu
 
         Text {
             id: accountName

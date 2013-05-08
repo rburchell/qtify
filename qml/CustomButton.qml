@@ -67,11 +67,5 @@ Button {
             width: button.width ? button.width : implicitWidth
             height: button.height ? button.height : implicitHeight
         }
-
-        backgroundColor: button.enabled ? "white" : "#999999"
-//        text.font.pixelSize: 12
-//        text.color: button.enabled ? "white" : "#999999"
-//        text.style: button.enabled ? Text.Sunken : Text.Normal
-//        text.styleColor: "#222222"
     }
 }

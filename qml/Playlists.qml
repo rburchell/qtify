@@ -53,18 +53,12 @@ Rectangle {
     TableView {
         id: tableView
         anchors.fill: parent
-        anchors.topMargin: 8
-
         frameVisible: false
         headerVisible: false
         alternatingRowColors: false
         backgroundColor: "transparent"
-        Component.onCompleted:  {
-            verticalScrollBar.anchors.topMargin = -8
-            horizontalScrollBar.visible = false
-        }
 
-        style: TableViewStyle { scrollBar: CustomScrollBarStyle { } }
+        style: CustomTableViewStyle { }
 
         TableViewColumn{ role: "name" ; width: 200 }
 
@@ -107,7 +101,7 @@ Rectangle {
         }
 
         itemDelegate: Item {
-            width: tableView.verticalScrollBar.visible ? tableView.width - tableView.verticalScrollBar.width : tableView.width
+            implicitWidth: parent.width
 
             Image {
                 id: playlistImage

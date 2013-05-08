@@ -113,6 +113,7 @@ Rectangle {
                 width: parent.width
                 placeholderText: "Username"
                 focus: true
+
                 Keys.onTabPressed: passwordField.forceActiveFocus()
                 Keys.onReturnPressed: {
                     if (passwordField.text.length === 0)
@@ -126,7 +127,7 @@ Rectangle {
                 id: passwordField
                 width: parent.width
                 placeholderText: "Password"
-                //passwordMode: true
+                echoMode: TextInput.Password
                 Keys.onTabPressed: usernameField.forceActiveFocus()
                 Keys.onReturnPressed: {
                     if (usernameField.text.length === 0)

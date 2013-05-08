@@ -53,7 +53,8 @@ Item {
         backgroundColor: "#00000000"
         frameVisible: false
 
-        style: TableViewStyle { scrollBar: CustomScrollBarStyle { } }
+        style: CustomTableViewStyle { }
+
 
         TableViewColumn{ role: "isStarred" ; title: ""; width: 30 }
         TableViewColumn{ role: "name" ; title: "Track"; width: 220 }
@@ -107,7 +108,7 @@ Item {
                 },
                 State {
                     name: "selectedActiveFocus"
-                    when: rowSelected// && tableView.activeFocus
+                    when: rowSelected && tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselectedfocus.png" }
                 },
                 State {
@@ -128,7 +129,7 @@ Item {
                     CustomButton {
                         anchors.centerIn: parent
                         iconName: (modelData.isCurrentPlayingTrack && !__containsMouse && !pressed ? ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (itemSelected && tableView.activeFocus ? "-activefocus" : ""))
-                                                                                                 : modelData.isStarred ? "star-on" : "star-off")
+                                                                                                   : modelData.isStarred ? "star-on" : "star-off")
                         hoverEnabled: true
                         onClicked: modelData.isStarred = !modelData.isStarred
                     }
@@ -175,13 +176,5 @@ Item {
                 }
             }
         }
-    }
-
-    BorderImage {
-        source: "images/scrollbar-corner.png"
-        border.left: 1; border.top: 1
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        visible: tableView.verticalScrollBar.visible && tableView.horizontalScrollBar.visible
     }
 }

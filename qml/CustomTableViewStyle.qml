@@ -43,12 +43,25 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 
-ScrollBarStyle {
-    scrollToClickPosition: false
+TableViewStyle {
     minimumHandleLength: 20
     handleOverlap: 4
+    scrollToClickedPosition: true
 
-    background: BorderImage {
+    padding.top: 0
+    padding.bottom: 0
+    padding.left: 0
+    padding.right: 0
+
+    corner: BorderImage {
+        source: "images/scrollbar-corner.png"
+        border.left: 1
+        border.top: 1
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+    }
+
+    scrollBarBackground: BorderImage {
         source: horizontal ? "images/scrollbar-horizontal-bg.png" : "images/scrollbar-vertical-bg.png"
         border.left: 1;
     }

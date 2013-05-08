@@ -54,16 +54,18 @@ SplitView {
         color: "#292929"
     }
 
-    Item {
+    Rectangle {
+        border.color: "red"
         Layout.maximumWidth: 300
         Layout.minimumWidth: 120
-        width: 200
+        width: 220
 
         Playlists {
             id: playlists
             anchors.top: parent.top
             anchors.bottom: nowplaying.top
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             onSelectedPlaylistChanged: {
                 mainView.setSource("PlaylistView.qml", { "playlist": playlists.selectedPlaylist })

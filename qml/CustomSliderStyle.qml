@@ -44,7 +44,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 
 SliderStyle {
-    background: Item {
+    groove: Item {
         BorderImage {
             width: parent.width
             anchors.verticalCenter: parent.verticalCenter

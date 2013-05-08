@@ -57,7 +57,7 @@ OTHER_FILES += \
     qml/SearchResults.qml
 
 OTHER_FILES += \
-    qml/CustomScrollBarStyle.qml
+    qml/CustomTableViewStyle.qml
 
 MOC_DIR = ./.moc
 OBJECTS_DIR = ./.obj
