@@ -56,7 +56,6 @@ Rectangle {
         frameVisible: false
         headerVisible: false
         alternatingRowColors: false
-        backgroundColor: "transparent"
 
         style: CustomTableViewStyle { }
 
@@ -84,17 +83,17 @@ Rectangle {
             states: [
                 State {
                     name: "normal"
-                    when: !rowSelected
+                    when: !styleData.selected
                     PropertyChanges { target: rowBackground; source: "" }
                 },
                 State {
                     name: "selectedActiveFocus"
-                    when: rowSelected && tableView.activeFocus
+                    when: styleData.selected && tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselectedfocus.png" }
                 },
                 State {
                     name: "selectedNoFocus"
-                    when: rowSelected && !tableView.activeFocus
+                    when: styleData.selected && !tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselected.png" }
                 }
             ]
@@ -113,7 +112,7 @@ Rectangle {
                                                                   : modelData.type === SpotifyPlaylist.Starred ? "starred"
                                                                                                                : "playlist")
                         + (modelData.collaborative ? "-collaborative" : "")
-                        + (itemSelected && tableView.activeFocus ? "-activefocus" : "")
+                        + (styleData.selected && tableView.activeFocus ? "-activefocus" : "")
                         + ".png"
             }
 
@@ -140,28 +139,28 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 source: spotify.currentTrack && spotify.currentTrack.playlist === modelData ? ("images/" +
-                                                ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (itemSelected && tableView.activeFocus ? "-activefocus" : ""))
+                                                ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (styleData.selected && tableView.activeFocus ? "-activefocus" : ""))
                                                 + ".png")
                                              : ""
             }
             states: [
                 State {
                     name: "normal"
-                    when: !itemSelected
+                    when: !styleData.selected
                     PropertyChanges { target: playlistText; color: "#ffffff" }
                     PropertyChanges { target: playlistText; styleColor: "#111111" }
                     PropertyChanges { target: playlistText; font.bold: false }
                 },
                 State {
                     name: "selectedActiveFocus"
-                    when: itemSelected && tableView.activeFocus
+                    when: styleData.selected && tableView.activeFocus
                     PropertyChanges { target: playlistText; color: "#111111" }
                     PropertyChanges { target: playlistText; styleColor: "#dddddd" }
                     PropertyChanges { target: playlistText; font.bold: true }
                 },
                 State {
                     name: "selectedNoFocus"
-                    when: itemSelected && !tableView.activeFocus
+                    when: styleData.selected && !tableView.activeFocus
                     PropertyChanges { target: playlistText; color: "#ffffff" }
                     PropertyChanges { target: playlistText; styleColor: "#222222" }
                     PropertyChanges { target: playlistText; font.bold: true }

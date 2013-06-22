@@ -50,7 +50,6 @@ Item {
         id: tableView
         anchors.fill: parent
 
-        backgroundColor: "#00000000"
         frameVisible: false
 
         style: CustomTableViewStyle { }
@@ -75,45 +74,53 @@ Item {
                 anchors.fill: parent
                 anchors.leftMargin: 5
                 verticalAlignment: Text.AlignVCenter
-                text: itemValue
+                text: styleData.value
                 font.pixelSize: 12
-                color: "#111111"
+                color: "#ddd"
                 font.family: "Arial"
                 font.bold: true
-                style: Text.Raised
-                styleColor: "#cccccc"
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.verticalCenterOffset: -1
+                    text: styleData.value
+                    font.pixelSize: 12
+                    color: "#111"
+                    font.family: "Arial"
+                    font.bold: true
+                }
             }
         }
 
         rowDelegate: BorderImage {
             id: rowBackground
             border.top: 1
-            height: 20
+            height: 24
 
             states: [
                 State {
                     name: "normal"
-                    when: !rowSelected && !alternateBackground && (!modelData || !modelData.isCurrentPlayingTrack)
+                    when: !styleData.selected && !styleData.alternate && (!modelData || !modelData.isCurrentPlayingTrack)
                     PropertyChanges { target: rowBackground; source: "" }
                 },
                 State {
                     name: "normalalternate"
-                    when: !rowSelected && alternateBackground && (!modelData || !modelData.isCurrentPlayingTrack)
+                    when: !styleData.selected && styleData.alternate && (!modelData || !modelData.isCurrentPlayingTrack)
                     PropertyChanges { target: rowBackground; source: "images/mainlist-row-alternate.png" }
                 },
                 State {
                     name: "normalplaying"
-                    when: !rowSelected && modelData.isCurrentPlayingTrack
+                    when: !styleData.selected && modelData.isCurrentPlayingTrack
                     PropertyChanges { target: rowBackground; source: "images/mainlist-row-playing-bg.png" }
                 },
                 State {
                     name: "selectedActiveFocus"
-                    when: rowSelected && tableView.activeFocus
+                    when: styleData.selected && tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselectedfocus.png" }
                 },
                 State {
                     name: "selectedNoFocus"
-                    when: rowSelected && !tableView.activeFocus
+                    when: styleData.selected && !tableView.activeFocus
                     PropertyChanges { target: rowBackground; source: "images/itemlistselected.png" }
                 }
             ]
@@ -121,14 +128,15 @@ Item {
 
         itemDelegate: Loader {
             anchors.fill: parent
-            sourceComponent: role === "isStarred" ? imageComponent : textComponent
+            sourceComponent: styleData.role === "isStarred" ? imageComponent : textComponent
 
             Component {
                 id: imageComponent
                 Item {
+                    anchors.fill: parent
                     CustomButton {
                         anchors.centerIn: parent
-                        iconName: (modelData.isCurrentPlayingTrack && !__containsMouse && !pressed ? ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (itemSelected && tableView.activeFocus ? "-activefocus" : ""))
+                        iconName: (modelData.isCurrentPlayingTrack && !hovered && !pressed ? ("currenttrack" + (spotify.isPlaying ? "-playing" : "") + (styleData.selected && tableView.activeFocus ? "-activefocus" : ""))
                                                                                                    : modelData.isStarred ? "star-on" : "star-off")
                         hoverEnabled: true
                         onClicked: modelData.isStarred = !modelData.isStarred
@@ -146,7 +154,7 @@ Item {
                     anchors.topMargin: 1
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
-                    text: itemValue
+                    text: styleData.value
                     elide: Text.ElideRight
                     font.pixelSize: 11
                     opacity: 0.79
@@ -154,22 +162,22 @@ Item {
                     states: [
                         State {
                             name: "normal"
-                            when: !itemSelected && !modelData.isCurrentPlayingTrack
+                            when: !styleData.selected && !modelData.isCurrentPlayingTrack
                             PropertyChanges { target: text; color: "#ffffff" }
                         },
                         State {
                             name: "playing"
-                            when: !itemSelected && modelData.isCurrentPlayingTrack
+                            when: !styleData.selected && modelData.isCurrentPlayingTrack
                             PropertyChanges { target: text; color: "#abf781" }
                         },
                         State {
                             name: "selectedActiveFocus"
-                            when: itemSelected && tableView.activeFocus
+                            when: styleData.selected && tableView.activeFocus
                             PropertyChanges { target: text; color: "#111111" }
                         },
                         State {
                             name: "selectedNoFocus"
-                            when: itemSelected && !tableView.activeFocus
+                            when: styleData.selected && !tableView.activeFocus
                             PropertyChanges { target: text; color: "#ffffff" }
                         }
                     ]
