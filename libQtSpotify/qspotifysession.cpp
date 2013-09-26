@@ -613,13 +613,13 @@ QSpotifySession *QSpotifySession::instance()
 void QSpotifySession::cleanUp()
 {
     stop();
-    delete m_playQueue;
+    logout(true);
     m_audioThread->quit();
     m_audioThread->wait();
-    delete m_audioThread;
-    logout(true);
-//    delete m_user;
     sp_session_release(m_sp_session);
+
+    delete m_playQueue;
+    delete m_audioThread;
     delete m_networkConfManager;
 }
 
